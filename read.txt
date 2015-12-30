@@ -1,0 +1,1 @@
+This is  a read test file for Java programming lesson

@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=strand
+comment0.target=void\ printsAllStarts(java.lang.String)
+comment1.params=strand\ index
+comment1.target=int\ findStopIndex(java.lang.String,\ int)
+comment2.params=dnaStrand
+comment2.target=java.lang.String\ getGenes(java.lang.String)
+comment3.params=dna
+comment3.target=void\ printAll(java.lang.String)
+comment4.params=c
+comment4.target=int\ numberC(java.lang.String)
+comment5.params=g
+comment5.target=int\ numberG(java.lang.String)
+comment6.params=nucleotide
+comment6.target=boolean\ CtoGGreater(java.lang.String)
+comment7.params=pushValue
+comment7.target=int[]\ arrayAdd(int)
+comment8.params=
+comment8.target=void\ realTesting()
+numComments=9
