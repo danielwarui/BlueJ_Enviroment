@@ -28,6 +28,6 @@ public class WhichCountriesExport {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
         // getCSVParser returns a parser Obj.
-        listExporter(parser, "coffee");
+        listExporters(parser, "coffee");
     }
 }

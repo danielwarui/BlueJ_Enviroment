@@ -50,27 +50,43 @@ public class BabyBirths {
         totalBirths(fr);
     }
 
+    public boolean nameAvailable(CSVParser parser,String name){
+        Boolean nameAvailable = false;
+        for(CSVRecord record : parser){
+            // Check if name is available
+            if(name.equals(record.get(0))){
+                nameAvailable = true;
+                break;
+            }
+            else {
+                nameAvailable = false;
+            }
+        }
+        //System.out.println(nameAvailable);
+        return nameAvailable;  
+    }
+
     public int getRank(int year, String name, String gender){
         int rank = 0;
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser(false);
-
-        for(CSVRecord record : parser){
-            // for gender Male
-            if(gender.equals("M") || gender.equals("F")){
+        if(nameAvailable(parser, name)){
+           System.out.println(parser.getCurrentLineNumber());
+            for(CSVRecord record : parser){
+                // for gender Male
                 if(gender.equals(record.get(1))){
                     rank++;
+                    System.out.println(record.get(0) + " is " + rank);
                     if(name.equals(record.get(0))){
-                        System.out.println(rank + name);
                         break;
                     }
                 }
             }
-            else{
-                System.out.println("Invalid gender input please use M(Male) or F(Female)");
-                rank = -1;
-            }
+        }else {
+            rank = -1;
         }
+        System.out.println("The name " + name + " is rank " + rank);
+
         return rank;
     }
 

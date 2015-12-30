@@ -28,7 +28,7 @@ public class AssignmentOneCSV {
          */
         for(CSVRecord record : parser){
             String countryStr = record.get("Country");
-            if(countryStr.contains(country)){
+            if(countryStr.equals(country)){
                 // Name of the country is *CountryStr and not *country(parameter)
                 String exports = record.get("Exports"); 
                 String value = record.get("Value (dollars)");
