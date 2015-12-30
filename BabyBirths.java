@@ -50,42 +50,34 @@ public class BabyBirths {
         totalBirths(fr);
     }
 
-    public boolean nameAvailable(CSVParser parser,String name){
-        Boolean nameAvailable = false;
-        for(CSVRecord record : parser){
-            // Check if name is available
-            if(name.equals(record.get(0))){
-                nameAvailable = true;
-                break;
-            }
-            else {
-                nameAvailable = false;
-            }
-        }
-        //System.out.println(nameAvailable);
-        return nameAvailable;  
-    }
 
     public int getRank(int year, String name, String gender){
         int rank = 0;
+        boolean nameFound = false;
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser(false);
-        if(nameAvailable(parser, name)){
-           System.out.println(parser.getCurrentLineNumber());
-            for(CSVRecord record : parser){
-                // for gender Male
-                if(gender.equals(record.get(1))){
-                    rank++;
-                    System.out.println(record.get(0) + " is " + rank);
-                    if(name.equals(record.get(0))){
-                        break;
-                    }
+        for(CSVRecord record : parser){
+            // when the desired gender is found initialize counter
+            if(gender.equals(record.get(1))){
+                rank++;
+                if(name.equals(record.get(0))){
+                    nameFound = true;
+                    // we can break from the loop once we find the name we are looking for;
+                    break;
+                }
+                else{
+                    // says name was not found until record shows that name was found
+                    nameFound = false;
                 }
             }
-        }else {
+        }
+
+        if(nameFound){
+            System.out.println("The name " + name + " is rank " + rank);
+        }else{
+            System.out.println("The name " + name + " is not found ");
             rank = -1;
         }
-        System.out.println("The name " + name + " is rank " + rank);
 
         return rank;
     }
