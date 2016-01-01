@@ -50,7 +50,6 @@ public class BabyBirths {
         totalBirths(fr);
     }
 
-
     public int getRank(int year, String name, String gender){
         int rank = 0;
         boolean nameFound = false;
@@ -84,7 +83,39 @@ public class BabyBirths {
 
     public String getName(int year, int rank, String gender){
         String halfling = null;
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser(false);
+        for(CSVRecord record : parser){
+            // when the desired gender is found initialize counter
+            if(gender.equals(record.get(1))){
+                rank--;
+                if(rank == 0){
+                    System.out.println(record.get(0));
+                    halfling = record.get(0);
+                    break;
+                }
+                else{
+                    halfling = "NO NAME";
+                }
+            }
+        }
+
         return halfling;
+    }
+
+    public void whatIsNameInYear(int rank, int yearOne, int yearTwo, String gender){
+        String pronoun = null;
+        if(gender == "M"){
+        pronoun = "he";
+        }
+        else{
+        pronoun = "she";
+        }
+        
+        String nameInFirstYear = getName(yearOne, rank, gender);
+        String nameInSecondYear = getName(yearTwo, rank, gender);
+        System.out.println(nameInFirstYear + " born in " + yearOne + " would be "+ nameInSecondYear + " if " + pronoun + " was born in " + yearTwo + ".");
+        
     }
 
 }
