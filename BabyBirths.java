@@ -5,6 +5,7 @@
  * @author Ndungu Daniel Warui
  * @version : 1.0 29th December 2015 at 1821hrs
  */
+import java.io.*;
 import edu.duke.*;
 import org.apache.commons.csv.*;
 
@@ -81,6 +82,10 @@ public class BabyBirths {
         return rank;
     }
 
+    public void testGetRank(String name, String gender){
+        int highestRank = getRank( 3 , name, gender);
+    }
+
     public String getName(int year, int rank, String gender){
         String halfling = null;
         FileResource fr = new FileResource();
@@ -106,16 +111,97 @@ public class BabyBirths {
     public void whatIsNameInYear(int rank, int yearOne, int yearTwo, String gender){
         String pronoun = null;
         if(gender == "M"){
-        pronoun = "he";
+            pronoun = "he";
         }
         else{
-        pronoun = "she";
+            pronoun = "she";
         }
-        
+
         String nameInFirstYear = getName(yearOne, rank, gender);
         String nameInSecondYear = getName(yearTwo, rank, gender);
         System.out.println(nameInFirstYear + " born in " + yearOne + " would be "+ nameInSecondYear + " if " + pronoun + " was born in " + yearTwo + ".");
-        
+
     }
 
+    public int getRankinFile(File f, int year, String name, String gender){
+        int rank = 0;
+        boolean nameFound = false;
+        FileResource fr = new FileResource(f);
+        CSVParser parser = fr.getCSVParser(false);
+        for(CSVRecord record : parser){
+            // when the desired gender is found initialize counter
+            if(gender.equals(record.get(1))){
+                rank++;
+                if(name.equals(record.get(0))){
+                    nameFound = true;
+                    // we can break from the loop once we find the name we are looking for;
+                    break;
+                }
+                else{
+                    // says name was not found until record shows that name was found
+                    nameFound = false;
+                }
+            }
+        }
+
+        if(nameFound){
+            //  System.out.println("The name " + name + " is rank " + rank);
+        }else{
+            //  System.out.println("The name " + name + " is not found ");
+            rank = -1;
+        }
+
+        return rank;
+    }
+
+    public int yearOfHighestRank(String name, String gender){
+        int highestRankSoFar = 0;
+        int rank = 0;
+        boolean nameFound = false;
+        // setup check for many files
+        DirectoryResource dr = new DirectoryResource();
+        for(File f : dr.selectedFiles()){
+            // check file by file
+            int currentRankSoFar = getRankinFile(f,2,name,gender);
+            if(currentRankSoFar == -1){
+                currentRankSoFar = 2147483647;
+               // System.out.println(name + " was not found in the file " + f.toString());
+            }
+            highestRankSoFar = getHigherRankOfTwo(currentRankSoFar, highestRankSoFar);
+            System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
+            //int highestRank = getRank( 3 , name, gender);
+            // getRank for name and gender as given
+            // update smallest rank so far
+        }
+        
+        return highestRankSoFar; 
+    }
+
+    public int getHigherRankOfTwo(int currentSmallest,int smallestSoFar){
+       
+        if(smallestSoFar == 0){
+            smallestSoFar = currentSmallest;
+            }
+
+        if(currentSmallest < smallestSoFar){
+
+            smallestSoFar = currentSmallest;
+        } 
+
+        return smallestSoFar;
+    }
+
+    /*
+    public CSVRecord hottestInManyDays(){
+    CSVRecord largestSoFar = null;
+    DirectoryResource dr = new DirectoryResource();
+    for(File f : dr.selectedFiles()){
+    FileResource fr = new FileResource(f);
+    // use method to get largest in file.
+    CSVRecord currentRow = hottestHourinFile(fr.getCSVParser());
+    largestSoFar = getLargestOfTwo(currentRow, largestSoFar);
+    }
+    return largestSoFar;
+    }
+     */
 }
