@@ -165,7 +165,7 @@ public class BabyBirths {
             int currentRankSoFar = getRankinFile(f,2,name,gender);
             if(currentRankSoFar == -1){
                 currentRankSoFar = 2147483647;
-               // System.out.println(name + " was not found in the file " + f.toString());
+                // System.out.println(name + " was not found in the file " + f.toString());
             }
             highestRankSoFar = getHigherRankOfTwo(currentRankSoFar, highestRankSoFar);
             System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
@@ -173,15 +173,15 @@ public class BabyBirths {
             // getRank for name and gender as given
             // update smallest rank so far
         }
-        
+
         return highestRankSoFar; 
     }
 
     public int getHigherRankOfTwo(int currentSmallest,int smallestSoFar){
-       
+
         if(smallestSoFar == 0){
             smallestSoFar = currentSmallest;
-            }
+        }
 
         if(currentSmallest < smallestSoFar){
 
@@ -190,6 +190,44 @@ public class BabyBirths {
 
         return smallestSoFar;
     }
+
+    public double findAverage(double sum, int noOfEntries){
+        return sum / noOfEntries;
+    }
+
+    public double getAverageRank(String name, String gender){
+        double averageRank = 0.0;
+        int sumRanks = 0;
+        int sumFilesWithName = 0;
+        // Set up check for selecting multiple files
+         DirectoryResource dr = new DirectoryResource();
+        for(File f : dr.selectedFiles()){
+            // check file by file
+             // get rank through name and gender given 
+            int currentRankSoFar = getRankinFile(f,2,name,gender);
+            if(currentRankSoFar == -1){
+               
+                // System.out.println(name + " was not found in the file " + f.toString());
+            }else{
+            sumFilesWithName++;
+            sumRanks += currentRankSoFar;
+            }
+            
+           // highestRankSoFar = getHigherRankOfTwo(currentRankSoFar, highestRankSoFar);
+           // System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
+           
+        }
+       averageRank = findAverage((double) sumRanks, sumFilesWithName);
+        // sum of ranks collected for every file
+        /*count number of files checked and minus the file for everytime -1 rank is returned*/
+        /*have value of the total number of ranks */
+        
+        return averageRank;
+    }
+    // method returns total number of births of the gender above the name passed.
+    /*public int getTotalBirthsRankedHigher(int year, String name, String gender){
+    
+    }*/
 
     /*
     public CSVRecord hottestInManyDays(){
