@@ -158,6 +158,7 @@ public class BabyBirths {
         int highestRankSoFar = 0;
         int rank = 0;
         boolean nameFound = false;
+        String yearOfHighestRank;
         // setup check for many files
         DirectoryResource dr = new DirectoryResource();
         for(File f : dr.selectedFiles()){
@@ -167,13 +168,17 @@ public class BabyBirths {
                 currentRankSoFar = 2147483647;
                 // System.out.println(name + " was not found in the file " + f.toString());
             }
+            if(currentRankSoFar == 3546){
+            
+            System.out.println(" current highest rank so far " + f.toString());
+            }
             highestRankSoFar = getHigherRankOfTwo(currentRankSoFar, highestRankSoFar);
-            System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
+          //  System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
             //int highestRank = getRank( 3 , name, gender);
             // getRank for name and gender as given
             // update smallest rank so far
         }
-
+        
         return highestRankSoFar; 
     }
 
@@ -200,34 +205,58 @@ public class BabyBirths {
         int sumRanks = 0;
         int sumFilesWithName = 0;
         // Set up check for selecting multiple files
-         DirectoryResource dr = new DirectoryResource();
+        DirectoryResource dr = new DirectoryResource();
         for(File f : dr.selectedFiles()){
             // check file by file
-             // get rank through name and gender given 
+            // get rank through name and gender given 
             int currentRankSoFar = getRankinFile(f,2,name,gender);
             if(currentRankSoFar == -1){
-               
+
                 // System.out.println(name + " was not found in the file " + f.toString());
             }else{
-            sumFilesWithName++;
-            sumRanks += currentRankSoFar;
+                sumFilesWithName++;
+                sumRanks += currentRankSoFar;
             }
-            
-           // highestRankSoFar = getHigherRankOfTwo(currentRankSoFar, highestRankSoFar);
-           // System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
-           
+
+            // highestRankSoFar = getHigherRankOfTwo(currentRankSoFar, highestRankSoFar);
+            // System.out.println(currentRankSoFar + "  " + highestRankSoFar + f.toString());
+
         }
-       averageRank = findAverage((double) sumRanks, sumFilesWithName);
+        averageRank = findAverage((double) sumRanks, sumFilesWithName);
         // sum of ranks collected for every file
         /*count number of files checked and minus the file for everytime -1 rank is returned*/
         /*have value of the total number of ranks */
-        
+
         return averageRank;
     }
     // method returns total number of births of the gender above the name passed.
-    /*public int getTotalBirthsRankedHigher(int year, String name, String gender){
-    
-    }*/
+    public int getTotalBirthsRankedHigher(int year, String name, String gender){
+        // get Rank for name gender
+        // initialize sum for counting items in row 2 
+
+        int totalBirthsRankedHigher = 0;
+        int counter = 0;
+
+        int rankinUse = getRank(year, name, gender);
+        rankinUse -= 1;
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser(false);
+        for(CSVRecord record : parser){
+
+            // when the desired gender is found initialize counter
+            if(gender.equals(record.get(1))){
+                counter++;
+                totalBirthsRankedHigher += Integer.parseInt(record.get(2));
+                //once we get the gender we are suposed to add up until negative one rank
+                if(counter == rankinUse){
+                    break;
+
+                }
+
+            }
+        }
+        return totalBirthsRankedHigher;
+    }
 
     /*
     public CSVRecord hottestInManyDays(){
