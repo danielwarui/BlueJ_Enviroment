@@ -9,11 +9,11 @@ import java.io.*;
 
 public class PrimeNumberGenerator {
     public void findPrimeNumbers(){
-        String file_path = "prime_numbers_to_billion.txt";
+        String file_path = "prime_numbers_to_million.txt";
         try{
             PrintWriter writer = new PrintWriter(file_path, "UTF-8");
             // PRINT PRIME NUMBERS ONE TO A BILLION
-            for(int i = 1; i < 1000000000; i++){
+            for(int i = 2; i < 1000000; i++){
                 if(isPrime(i)){
                     writer.println("-->"+ i);
                 }
