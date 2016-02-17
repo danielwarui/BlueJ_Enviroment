@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ makeStringCombination()
+comment1.params=elements\ lengthOfList
+comment1.target=java.lang.String[]\ getAllLists(java.lang.String[],\ int)
+numComments=2
