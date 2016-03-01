@@ -8,8 +8,8 @@
 import java.io.*;
 public class makeDict {
     // initialize the characters you want to check with
-    String charDict[] = {"a","b","c","d","e","f","g","h","i","l","m","n","o","p","q","r","s","t","u","w","y","z"};  
-    String charDictMirror[] = {"a","b","c","d","e","f","g","h","i","l","m","n","o","p","q","r","s","t","u","w","y","z"};
+    String charDict[] = {"","","","",""};  
+    String charDictMirror[] = {"","","","",""};
     // make a password with eight characters
     public void makeStringCombination(){
         String file_path = "string_combis.txt";
@@ -20,7 +20,7 @@ public class makeDict {
                 while(i == 4){
                 String[] result = getAllLists(charDict, i);
                 for(int j=0; j<result.length; j++){
-                    // System.out.println(result[j]);
+                   //  System.out.println(result[j]);
                     String[] resultMirror = getAllLists(charDictMirror, i);
                      for(int k=0; k<resultMirror.length; k++){
                          writer.println(result[j]+resultMirror[k]);
